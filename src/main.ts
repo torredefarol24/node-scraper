@@ -1,1 +1,3 @@
-console.log("Hey");
+import { addItems } from "./modules/addItems";
+
+addItems();
