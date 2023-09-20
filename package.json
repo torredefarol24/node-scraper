@@ -1,0 +1,12 @@
+{
+	"name": "node-scraper",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "Toufiq <burningraven06@outlook.com>",
+	"license": "MIT",
+	"scripts": {
+		"watch-ts": "tsc -w",
+		"watch-js": "nodemon build/main.js",
+		"start": "node build/main.js"
+	}
+}
