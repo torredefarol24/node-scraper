@@ -8,7 +8,7 @@ class Scraper {
         this._params = scrapeParams;
     }
     async getTotalAdsCount() {
-        return await (0, getTotalAdsCount_1.getTotalAdCount)(this._params);
+        return await (0, getTotalAdsCount_1.getTotalAdsCount)(this._params);
     }
     async addItems() {
         return await (0, addItems_1.addItems)(this._params);

@@ -1,9 +1,8 @@
 import puppeteer from "puppeteer";
-import { SCRAPE_URL } from "../config/scrapeParams";
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../config/successErrorMessages";
 import { logger } from "./logger";
 
-export async function getHTML() {
+export async function getHTML(url: string) {
 	try {
 		// Launch an instance of the browser
 		const browser = await puppeteer.launch({
@@ -12,7 +11,7 @@ export async function getHTML() {
 
 		// Visit the url
 		const page = await browser.newPage();
-		await page.goto(SCRAPE_URL);
+		await page.goto(url);
 
 		// Get HTML content of the page
 		const pageHTML: string = await page.evaluate(() => {

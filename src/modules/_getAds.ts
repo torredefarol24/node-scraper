@@ -1,17 +1,18 @@
 import * as cheerio from "cheerio";
 import { ERROR_MESSAGES } from "../config/successErrorMessages";
-import { ITEMS_LIST_PARAMS } from "../config/scrapeParams";
 import { logger } from "../utils/logger";
-import { getHTML } from "../utils/scrape";
+import { getHTML } from "../utils/scraper";
+import { IScrapeParams } from "../bootstrap/interface";
 
-export async function _getAds() {
+export async function _getAds(params: IScrapeParams) {
 	try {
 		// Parse HTML
-		const pageHTML: any = await getHTML();
+		const { SCRAPE_URL, HTML_PARAMS } = params;
+		const pageHTML: any = await getHTML(SCRAPE_URL);
 		const $ = cheerio.load(pageHTML);
 
 		// Select HTML element by attr
-		const $AD_LIST: any = $(ITEMS_LIST_PARAMS.PARENT_ELEM_ATTR);
+		const $AD_LIST: any = $(HTML_PARAMS.PARENT_ELEM_ATTR);
 
 		// Get all ads from list
 		const $TOTAL_ADS = $AD_LIST["0"].children;

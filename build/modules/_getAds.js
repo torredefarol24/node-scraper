@@ -26,16 +26,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports._getAds = void 0;
 const cheerio = __importStar(require("cheerio"));
 const successErrorMessages_1 = require("../config/successErrorMessages");
-const scrapeParams_1 = require("../config/scrapeParams");
 const logger_1 = require("../utils/logger");
-const scrape_1 = require("../utils/scrape");
-async function _getAds() {
+const scraper_1 = require("../utils/scraper");
+async function _getAds(params) {
     try {
         // Parse HTML
-        const pageHTML = await (0, scrape_1.getHTML)();
+        const { SCRAPE_URL, HTML_PARAMS } = params;
+        const pageHTML = await (0, scraper_1.getHTML)(SCRAPE_URL);
         const $ = cheerio.load(pageHTML);
         // Select HTML element by attr
-        const $AD_LIST = $(scrapeParams_1.ITEMS_LIST_PARAMS.PARENT_ELEM_ATTR);
+        const $AD_LIST = $(HTML_PARAMS.PARENT_ELEM_ATTR);
         // Get all ads from list
         const $TOTAL_ADS = $AD_LIST["0"].children;
         // Remove divs that don't contain ads
