@@ -1,17 +1,13 @@
-import * as cheerio from "cheerio";
-import { ITEMS_LIST_PARAMS } from "../config/scrapeParams";
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../config/successErrorMessages";
 import { logger } from "../utils/logger";
-import { getHTML } from "../utils/scrape";
+import { _getAds } from "./_getAds";
 
 export async function addItems() {
 	try {
-		// Parse HTML
-		const pageHTML: any = await getHTML();
-		const $ = cheerio.load(pageHTML);
-
-		// Select HTML elem by attr
-		const $AD_LIST = $(ITEMS_LIST_PARAMS.PARENT_ELEM_ATTR);
+		// Get Ads after scraping
+		const ads = await _getAds();
+		logger.info(SUCCESS_MESSAGES.ADD_ITEMS_DONE);
 	} catch (err: any) {
-		logger.error(`AddItems Failed ${err}`);
+		logger.error(`${ERROR_MESSAGES.ADD_ITEMS_FAILED} ${err}`);
 	}
 }
