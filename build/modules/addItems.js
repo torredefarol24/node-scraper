@@ -10,17 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addItems = void 0;
-const logger_1 = require("../utils/logger");
 function addItems() {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            // const pageHTML = await getHTML();
-            // const $ = cheerio.load(pageHTML);
-            // logger.info($);
-        }
-        catch (err) {
-            logger_1.logger.error(`AddItems Failed ${err}`);
-        }
+        // try {
+        // 	const pageHTML = await getHTML();
+        // 	const $ = cheerio.load(pageHTML);
+        // 	const $AD_LIST = $(ITEMS_LIST_PARAMS.PARENT_ELEM_ATTR);
+        // 	logger.info($);
+        // } catch (err: any) {
+        // 	logger.error(`AddItems Failed ${err}`);
+        // }
     });
 }
 exports.addItems = addItems;

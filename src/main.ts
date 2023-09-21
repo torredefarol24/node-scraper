@@ -1,3 +1,9 @@
 import { addItems } from "./modules/addItems";
+import { getAdCount } from "./modules/getTotalAdsCount";
 
-addItems();
+// addItems();
+getAdCount();
+
+// class AdScraper {
+// 	constructor() {}
+// }

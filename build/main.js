@@ -1,4 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const addItems_1 = require("./modules/addItems");
-(0, addItems_1.addItems)();
+const getTotalAdsCount_1 = require("./modules/getTotalAdsCount");
+// addItems();
+(0, getTotalAdsCount_1.getAdCount)();
+// class AdScraper {
+// 	constructor() {}
+// }

@@ -10,6 +10,8 @@ Initial url https://www.otomoto.pl/ciezarowe/uzytkowe/mercedes-benz/ od-2014/q-a
 Questions/thoughts:
 
 1. Ideas for error catching/solving, retry strategies?
+   if it was an EXPRESS.js app
+   Then use middleware for handling errors // sample code for errorHandling
 
 Approach 1
 Implement PUBSUB events
@@ -24,4 +26,7 @@ Implement a cron job to check that queue for failed tasks, and upon completion p
    Implement Github Actions for automated code deployment
 
 4. Other considerations?
+
    Unit tests
+   DOCKER
+   feature branching

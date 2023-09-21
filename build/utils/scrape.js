@@ -14,7 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getHTML = void 0;
 const puppeteer_1 = __importDefault(require("puppeteer"));
-const config_1 = require("../config");
+const scrapeParams_1 = require("../config/scrapeParams");
+const successErrorMessages_1 = require("../config/successErrorMessages");
 const logger_1 = require("./logger");
 function getHTML() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -25,18 +26,21 @@ function getHTML() {
             });
             // Visit the url
             const page = yield browser.newPage();
-            yield page.goto(config_1.SCRAPE_URL);
+            yield page.goto(scrapeParams_1.SCRAPE_URL);
             // Get HTML content of the page
             const pageHTML = yield page.evaluate(() => {
                 return document.documentElement.innerHTML;
             });
-            logger_1.logger.info(`HTML Fetching Complete`);
+            // Close browser for memory leaks
+            // Return page HTML
+            logger_1.logger.info(successErrorMessages_1.SUCCESS_MESSAGES.SCRAPING_DONE);
             yield browser.close();
             return pageHTML;
         }
         catch (err) {
-            logger_1.logger.error(`HTML Fetching Failed ${err}`);
-            throw new Error(err.toString());
+            // For now, log the error
+            // TO DO: throw error & catch in central error handler
+            logger_1.logger.error(`${successErrorMessages_1.ERROR_MESSAGES.SCRAPING_FAILED} ${err}`);
         }
     });
 }
