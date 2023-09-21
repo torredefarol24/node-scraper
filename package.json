@@ -6,8 +6,8 @@
 	"license": "MIT",
 	"scripts": {
 		"watch-ts": "tsc -w",
-		"watch-js": "nodemon build/main.js",
-		"start": "node build/main.js"
+		"watch-js": "nodemon build/app.js",
+		"start": "node build/app.js"
 	},
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.12",

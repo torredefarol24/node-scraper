@@ -1,5 +1,6 @@
 import { addItems } from "../modules/addItems";
 import { getTotalAdsCount } from "../modules/getTotalAdsCount";
+import { scrapeTruckItem } from "../modules/scrapeTruckItem";
 import { IScrapeParams } from "./interface";
 
 export class Scraper {
@@ -14,5 +15,9 @@ export class Scraper {
 
 	public async addItems() {
 		return await addItems(this._params);
+	}
+
+	public async scrapeTruck(){
+		return await scrapeTruckItem(this._params);
 	}
 }

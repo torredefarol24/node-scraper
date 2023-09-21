@@ -20,16 +20,15 @@ async function getHTML(url) {
         const pageHTML = await page.evaluate(() => {
             return document.documentElement.innerHTML;
         });
-        // Close browser for memory leaks
-        // Return page HTML
-        logger_1.logger.info(successErrorMessages_1.SUCCESS_MESSAGES.SCRAPING_DONE);
+        // Close browser for memory leaks & return page HTML
+        logger_1.logger.info(successErrorMessages_1.successMessages.scrapingDone);
         await browser.close();
         return pageHTML;
     }
     catch (err) {
         // For now, log the error
         // TO DO: throw error & catch in central error handler
-        logger_1.logger.error(`${successErrorMessages_1.ERROR_MESSAGES.SCRAPING_FAILED} ${err}`);
+        logger_1.logger.error(`${successErrorMessages_1.errorMessages.scrapingFailed} ${err}`);
     }
 }
 exports.getHTML = getHTML;

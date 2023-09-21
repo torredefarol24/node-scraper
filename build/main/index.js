@@ -3,13 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.scrape = void 0;
 const scraper_1 = require("../bootstrap/scraper");
 const scrapeParams_1 = require("../config/scrapeParams");
-const OtoMotoScraper = new scraper_1.Scraper(scrapeParams_1.OTOMOTO_PARAMS);
+const OTOMOTOScraper = new scraper_1.Scraper(scrapeParams_1.OTOMOTOParams);
 async function scrape() {
     try {
-        const adCount = await OtoMotoScraper.getTotalAdsCount();
+        const adCount = await OTOMOTOScraper.getTotalAdsCount();
         console.log("Total AdCount", adCount);
-        const items = await OtoMotoScraper.addItems();
+        const items = await OTOMOTOScraper.addItems();
         console.log("Items", items);
+        const truckItems = await OTOMOTOScraper.scrapeTruck();
+        console.log("Truck Items", truckItems);
     }
     catch (err) { }
 }

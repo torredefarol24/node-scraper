@@ -1,10 +1,25 @@
-export interface IHTML_Params {
-	PARENT_ELEM_ATTR: string;
-	AD_ID_ATTR: string;
-	AD_URL_ATTR: string;
+export interface IHTMLParams {
+	parentElemAttr: string;
+	adIdAttr: string;
+	adUrlAttr: string;
 }
 
 export interface IScrapeParams {
-	SCRAPE_URL: string;
-	HTML_PARAMS: IHTML_Params;
+	scrapeUrl: string;
+	htmlParams: IHTMLParams;
+}
+
+export interface IItem {
+	id: string;
+	url: string;
+}
+
+export interface ITruck {
+	id: string;
+	title: string;
+	price: string;
+	registrationDate: string;
+	productionDate: string;
+	mileage: string;
+	power: string;
 }

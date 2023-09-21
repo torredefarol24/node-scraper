@@ -1,15 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ERROR_MESSAGES = exports.SUCCESS_MESSAGES = void 0;
+exports.errorMessages = exports.successMessages = void 0;
 const successSuffix = "Complete";
 const failedSuffix = "Failed";
-exports.SUCCESS_MESSAGES = {
-    SCRAPING_DONE: `Scraping ${successSuffix}`,
-    GET_TOTAL_ADS_COUNT_DONE: `Get total ads count ${successSuffix}`,
-    ADD_ITEMS_DONE: `Add Items ${successSuffix}`
+exports.successMessages = {
+    scrapingDone: `Scraping ${successSuffix}`,
+    getTotalAdsCountDone: `Get total ads count ${successSuffix}`,
+    addItemsDone: `Add Items ${successSuffix}`,
+    scrapeTruckItemDone: `Scrape truck item ${successSuffix}`,
 };
-exports.ERROR_MESSAGES = {
-    SCRAPING_FAILED: `Scraping ${failedSuffix}`,
-    GET_TOTAL_ADS_COUNT_FAILED: `Get total ads count ${failedSuffix}`,
-    ADD_ITEMS_FAILED: `Add Items ${failedSuffix}`
+exports.errorMessages = {
+    scrapingFailed: `Scraping ${failedSuffix}`,
+    getTotalAdsCountFailed: `Get total ads count ${failedSuffix}`,
+    addItemsFailed: `Add Items ${failedSuffix}`,
+    scrapeTruckItemFailed: `Scrape truck item ${failedSuffix}`,
 };
