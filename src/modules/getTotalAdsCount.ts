@@ -12,7 +12,6 @@ export async function getAdCount() {
 
 		// Select HTML element by attr
 		const $AD_LIST: any = $(ITEMS_LIST_PARAMS.PARENT_ELEM_ATTR);
-		logger.info(SUCCESS_MESSAGES.GET_TOTAL_ADS_COUNT_DONE);
 
 		// Get all ads from list
 		const $TOTAL_ADS = $AD_LIST["0"].children;
@@ -22,6 +21,7 @@ export async function getAdCount() {
 			return !item.attribs.role;
 		});
 
+		logger.info(SUCCESS_MESSAGES.GET_TOTAL_ADS_COUNT_DONE);
 		return $ADS.length;
 	} catch (err: any) {
 		logger.error(`${ERROR_MESSAGES.GET_TOTAL_ADS_COUNT_FAILED} ${err}`);

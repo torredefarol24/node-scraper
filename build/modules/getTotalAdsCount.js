@@ -36,13 +36,13 @@ async function getAdCount() {
         const $ = cheerio.load(pageHTML);
         // Select HTML element by attr
         const $AD_LIST = $(scrapeParams_1.ITEMS_LIST_PARAMS.PARENT_ELEM_ATTR);
-        logger_1.logger.info(successErrorMessages_1.SUCCESS_MESSAGES.GET_TOTAL_ADS_COUNT_DONE);
         // Get all ads from list
         const $TOTAL_ADS = $AD_LIST["0"].children;
         // Remove divs that don't contain ads
         const $ADS = $TOTAL_ADS.filter((item) => {
             return !item.attribs.role;
         });
+        logger_1.logger.info(successErrorMessages_1.SUCCESS_MESSAGES.GET_TOTAL_ADS_COUNT_DONE);
         return $ADS.length;
     }
     catch (err) {
