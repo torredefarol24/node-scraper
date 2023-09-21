@@ -22,15 +22,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAdCount = void 0;
 const cheerio = __importStar(require("cheerio"));
@@ -38,21 +29,24 @@ const successErrorMessages_1 = require("../config/successErrorMessages");
 const scrapeParams_1 = require("../config/scrapeParams");
 const logger_1 = require("../utils/logger");
 const scrape_1 = require("../utils/scrape");
-function getAdCount() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            // Parse HTML 
-            const pageHTML = yield (0, scrape_1.getHTML)();
-            const $ = cheerio.load(pageHTML);
-            // Select HTML element by attr 
-            // Find count of list items
-            const $AD_LIST = $(scrapeParams_1.ITEMS_LIST_PARAMS.PARENT_ELEM_ATTR);
-            logger_1.logger.info(successErrorMessages_1.SUCCESS_MESSAGES.GET_TOTAL_ADS_COUNT_DONE);
-            return $AD_LIST["0"].children.length;
-        }
-        catch (err) {
-            logger_1.logger.error(`${successErrorMessages_1.ERROR_MESSAGES.GET_TOTAL_ADS_COUNT_FAILED} ${err}`);
-        }
-    });
+async function getAdCount() {
+    try {
+        // Parse HTML
+        const pageHTML = await (0, scrape_1.getHTML)();
+        const $ = cheerio.load(pageHTML);
+        // Select HTML element by attr
+        const $AD_LIST = $(scrapeParams_1.ITEMS_LIST_PARAMS.PARENT_ELEM_ATTR);
+        logger_1.logger.info(successErrorMessages_1.SUCCESS_MESSAGES.GET_TOTAL_ADS_COUNT_DONE);
+        // Get all ads from list
+        const $TOTAL_ADS = $AD_LIST["0"].children;
+        // Remove divs that don't contain ads
+        const $ADS = $TOTAL_ADS.filter((item) => {
+            return !item.attribs.role;
+        });
+        return $ADS.length;
+    }
+    catch (err) {
+        logger_1.logger.error(`${successErrorMessages_1.ERROR_MESSAGES.GET_TOTAL_ADS_COUNT_FAILED} ${err}`);
+    }
 }
 exports.getAdCount = getAdCount;

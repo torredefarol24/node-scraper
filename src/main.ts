@@ -1,8 +1,12 @@
-import { addItems } from "./modules/addItems";
 import { getAdCount } from "./modules/getTotalAdsCount";
 
 // addItems();
-getAdCount();
+(async function () {
+	try {
+		const adCount = await getAdCount();
+		console.log("Total AdCount", adCount);
+	} catch (err) {}
+})();
 
 // class AdScraper {
 // 	constructor() {}

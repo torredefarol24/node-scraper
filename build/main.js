@@ -2,7 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const getTotalAdsCount_1 = require("./modules/getTotalAdsCount");
 // addItems();
-(0, getTotalAdsCount_1.getAdCount)();
+(async function () {
+    try {
+        const adCount = await (0, getTotalAdsCount_1.getAdCount)();
+        console.log("Total AdCount", adCount);
+    }
+    catch (err) { }
+})();
 // class AdScraper {
 // 	constructor() {}
 // }
