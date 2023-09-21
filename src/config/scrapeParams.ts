@@ -10,5 +10,6 @@ export const OTOMOTOParams = {
 		parentElemAttr: '[data-testid="search-results"]',
 		adIdAttr: "data-id",
 		adUrlAttr: "href",
+		adPriceAttr: "data-price",
 	},
 };

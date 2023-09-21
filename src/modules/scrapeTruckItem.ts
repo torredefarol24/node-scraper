@@ -7,16 +7,20 @@ export async function scrapeTruckItem(params: IScrapeParams) {
 	try {
 		// Get Ads after scraping
 		const { htmlParams } = params;
-		const { adIdAttr } = htmlParams;
+		const { adIdAttr, adPriceAttr } = htmlParams;
 		const ads = await _getAds(params);
 
 		// Retrieve truck properties
 		const items = ads.map((item: any) => {
 			let id = item.children[0].attribs[adIdAttr];
-			let title = item.children[0].children[0].children[1].children[0].children[0].children[0].data;
+			let itemSection = item.children[0].children[0];
 
-			console.log("id", id);
-			console.log("title", title);
+			let title = itemSection.children[1].children[0].children[0].children[0].data;
+			let price = itemSection.children[3].children[1].children[1].attribs[adPriceAttr];
+
+			// console.log("id", id);
+			// console.log("title", title);
+			console.log("price", price);
 
 			return {};
 		});

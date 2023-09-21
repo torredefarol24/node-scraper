@@ -2,6 +2,7 @@ export interface IHTMLParams {
 	parentElemAttr: string;
 	adIdAttr: string;
 	adUrlAttr: string;
+	adPriceAttr: string;
 }
 
 export interface IScrapeParams {
