@@ -3,4 +3,6 @@ export const SCRAPE_URL =
 
 export const ITEMS_LIST_PARAMS = {
 	PARENT_ELEM_ATTR: '[data-testid="search-results"]',
+	AD_ID_FROM_ARTICLE: "data-id",
+	AD_URL_FROM_ANCHOR: "href",
 };
