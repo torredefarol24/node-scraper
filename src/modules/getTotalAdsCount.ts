@@ -2,7 +2,12 @@ import { load } from "cheerio";
 import { IScrapeParams } from "../bootstrap/interface";
 import { errorMessages, successMessages } from "../config/successErrorMessages";
 import { logger } from "../utils/logger";
-import { getHTML } from "../utils/scraper";
+import { getHTML } from "../utils/htmlFetcher";
+
+/**
+ * Function to get the total number of ads
+ * for the provided URL
+ */
 
 export async function getTotalAdsCount(params: IScrapeParams) {
 	try {
@@ -12,9 +17,9 @@ export async function getTotalAdsCount(params: IScrapeParams) {
 		const $ = load(pageHTML);
 
 		// Locate Selector & retrieve ad count
-		const adListDiv: any = $(htmlParams.parentElemAttr);
+		const adListDiv: any = $(htmlParams.itemListParentAttr);
 		const totalAdCount =
-			adListDiv[0].prev.children[0].children[0].children[0].next.children[1].children[0].data;
+			adListDiv[0].prev.children[0].children[0].children[0].next.children[1].children[0].data.trim();
 
 		logger.info(successMessages.getTotalAdsCountDone);
 		return totalAdCount;

@@ -2,6 +2,12 @@ import puppeteer from "puppeteer";
 import { errorMessages, successMessages } from "../config/successErrorMessages";
 import { logger } from "./logger";
 
+/**
+ * 
+ * @param url 
+ * @returns 
+ */
+
 export async function getHTML(url: string) {
 	try {
 		// Launch an instance of the browser

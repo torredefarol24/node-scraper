@@ -1,17 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorMessages = exports.successMessages = void 0;
+// Define all succ/err messages
 const successSuffix = "Complete";
 const failedSuffix = "Failed";
-exports.successMessages = {
-    scrapingDone: `Scraping ${successSuffix}`,
-    getTotalAdsCountDone: `Get total ads count ${successSuffix}`,
-    addItemsDone: `Add Items ${successSuffix}`,
-    scrapeTruckItemDone: `Scrape truck item ${successSuffix}`,
+const actions = {
+    scraping: "Scraping",
+    getTotalAdsCount: "Get total ads count",
+    addItems: "Add Items",
+    scrapeTruckItem: "Scrape truck item",
 };
+// Add success suffix to messages
+exports.successMessages = {
+    scrapingDone: `${actions.scraping} ${successSuffix}`,
+    getTotalAdsCountDone: `${actions.getTotalAdsCount} ${successSuffix}`,
+    addItemsDone: `${actions.addItems} ${successSuffix}`,
+    scrapeTruckItemDone: `${actions.scrapeTruckItem} ${successSuffix}`,
+};
+// Add failure suffix to messages
 exports.errorMessages = {
-    scrapingFailed: `Scraping ${failedSuffix}`,
-    getTotalAdsCountFailed: `Get total ads count ${failedSuffix}`,
-    addItemsFailed: `Add Items ${failedSuffix}`,
-    scrapeTruckItemFailed: `Scrape truck item ${failedSuffix}`,
+    scrapingFailed: `${actions.scraping} ${failedSuffix}`,
+    getTotalAdsCountFailed: `${actions.getTotalAdsCount} ${failedSuffix}`,
+    addItemsFailed: `${actions.addItems} ${failedSuffix}`,
+    scrapeTruckItemFailed: `${actions.scrapeTruckItem} ${failedSuffix}`,
 };
