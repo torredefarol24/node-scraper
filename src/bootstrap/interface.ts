@@ -18,6 +18,11 @@ export interface IItem {
 	url: string;
 }
 
+export interface IPage {
+	page: number;
+	url: string;
+}
+
 export interface ITruck {
 	id: string;
 	title: string;

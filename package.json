@@ -7,7 +7,8 @@
 	"scripts": {
 		"watch-ts": "tsc -w",
 		"watch-js": "nodemon build/app.js",
-		"start": "node build/app.js"
+		"start": "node build/app.js",
+		"build": "tsc"
 	},
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.12",

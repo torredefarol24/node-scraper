@@ -1,5 +1,5 @@
 import { load } from "cheerio";
-import { IScrapeParams } from "../bootstrap/interface";
+import { IPage, IScrapeParams } from "../bootstrap/interface";
 import { errorMessages, successMessages } from "../config/successErrorMessages";
 import { logger } from "../utils/logger";
 import { getNextPageUrl } from "./getNextPageUrl";
@@ -69,14 +69,29 @@ export async function getAllPageUrls(scrapeUrl: string, params: IScrapeParams) {
 		 */
 		let pageUrls = [];
 		let currentURL: any = scrapeUrl;
+		let nextURL: any = "";
 
 		for (var i = 0; i < pageCount; i++) {
-			let nextURL = await getNextPageUrl(currentURL, params);
-			pageUrls.push({
+			/**
+			 * Temporary Solution to get all page urls
+			 * 1. Approach through Puppeteer gives error
+			 * 2. Approach through scraping does not yield data
+			 */
+
+			/** Append page nums by replacing & incrementing value */
+			if (i < 2) {
+				nextURL = await getNextPageUrl(currentURL, params);
+			} else {
+				nextURL = `${currentURL.split(`&page=${i + 1}`)[0]}&page=${i + 2}`;
+			}
+
+			/** Store all page urls to scrape later */
+			let pageURL: IPage = {
 				page: i + 1,
-				url: nextURL,
-			});
-			currentURL = pageUrls[pageUrls.length - i - 1].url;
+				url: currentURL,
+			};
+			pageUrls.push(pageURL);
+			currentURL = nextURL;
 		}
 
 		logger.info(successMessages.findAllPageUrlsDone);

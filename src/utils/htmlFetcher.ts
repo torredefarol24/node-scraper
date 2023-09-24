@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { errorMessages, successMessages } from "../config/successErrorMessages";
+import { errorMessages } from "../config/successErrorMessages";
 import { logger } from "./logger";
 
 /**
@@ -24,7 +24,7 @@ export async function getHTML(url: string) {
 		});
 
 		/** Close browser for memory leaks & return page HTML */
-		logger.info(successMessages.scrapingDone);
+		// logger.info(successMessages.scrapingDone);
 		await browser.close();
 		return pageHTML;
 	} catch (err: any) {

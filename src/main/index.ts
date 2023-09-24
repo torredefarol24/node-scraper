@@ -1,6 +1,9 @@
+import { IPage } from "../bootstrap/interface";
 import { Scraper } from "../bootstrap/scraper";
 import { initialScrapeURL, OTOMOTOParams } from "../config/scrapeParams";
+import { getAllPageUrls } from "../modules/_getAllPageUrls";
 
+/** Initialize one instance of Scraper to follow Singleton Design Pattern */
 const OTOMOTOScraper = new Scraper(OTOMOTOParams);
 
 /**
@@ -9,14 +12,33 @@ const OTOMOTOScraper = new Scraper(OTOMOTOParams);
 
 export async function scrape() {
 	try {
-		const adCount = await OTOMOTOScraper.getTotalAdsCount(initialScrapeURL);
-		console.log("Total AdCount", adCount);
-		const items = await OTOMOTOScraper.addItems(initialScrapeURL);
-		console.log("Items", items);
-		const truckItems = await OTOMOTOScraper.scrapeTruck(initialScrapeURL);
-		console.log("Truck Items", truckItems);
-		const nextPageUrl = await OTOMOTOScraper.getNextPageUrl(initialScrapeURL);
-		console.log("Next Page URL", nextPageUrl);
+		/** Get list of page urls from initial scraping url */
+		console.log("Beginning to scrape for URL\n", initialScrapeURL);
+		const urlList: any = await getAllPageUrls(initialScrapeURL, OTOMOTOParams);
+
+		const { totalAdCount }: any = await OTOMOTOScraper.getTotalAdsCount(initialScrapeURL);
+		console.log("Total ads found: ", totalAdCount);
+
+		urlList.map(async (item: IPage) => {
+			console.log("\nScraping Page", item.page, "\nURL", item.url);
+
+			const truckIdTitles = await OTOMOTOScraper.addItems(item.url);
+			console.log("Truck Id/Titles", truckIdTitles);
+
+			const truckItems = await OTOMOTOScraper.scrapeTruck(initialScrapeURL);
+			console.log("Truck Items", truckItems);
+		});
+		// const adCount = await OTOMOTOScraper.getTotalAdsCount(initialScrapeURL);
+		// console.log("Total AdCount", adCount);
+
+		// const items = await OTOMOTOScraper.addItems(initialScrapeURL);
+		// console.log("Items", items);
+
+		// const truckItems = await OTOMOTOScraper.scrapeTruck(initialScrapeURL);
+		// console.log("Truck Items", truckItems);
+
+		// const nextPageUrl = await OTOMOTOScraper.getNextPageUrl(initialScrapeURL);
+		// console.log("Next Page URL", nextPageUrl);
 	} catch (err) {
 		/**
 		 * Implement RETRY MECHANISM here later
