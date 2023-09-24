@@ -7,38 +7,49 @@ import { getAllPageUrls } from "../modules/_getAllPageUrls";
 const OTOMOTOScraper = new Scraper(OTOMOTOParams);
 
 /**
- * MAIN MODULE for scraping
+ * MAIN MODULE for scraping all pages and ads
  */
 
-export async function scrape() {
+export async function scrapeAll() {
 	try {
-		/** Get list of page urls from initial scraping url */
-		console.log("Beginning to scrape for URL\n", initialScrapeURL);
+		/**
+		 * Get list of page urls from initial scraping url
+		 * Implements getNextPageUrl() and getAllPageUrls()
+		 */
+		console.log("Scraping Started", initialScrapeURL);
 		const urlList: any = await getAllPageUrls(initialScrapeURL, OTOMOTOParams);
 
+		/**
+		 * Get total ad count for initial scraping URL
+		 * Implements getTotalAdsCount()
+		 */
 		const { totalAdCount }: any = await OTOMOTOScraper.getTotalAdsCount(initialScrapeURL);
-		console.log("Total ads found: ", totalAdCount);
+		console.log("\nTotal ads :: getTotalAdsCount", totalAdCount);
 
+		/**
+		 * Scrapes All Pages & Ads
+		 */
 		urlList.map(async (item: IPage) => {
-			console.log("\nScraping Page", item.page, "\nURL", item.url);
-
+			/**
+			 * Get Truck id/titles from page
+			 * Implements addItems()
+			 */
 			const truckIdTitles = await OTOMOTOScraper.addItems(item.url);
 			console.log("Truck Id/Titles", truckIdTitles);
 
-			const truckItems = await OTOMOTOScraper.scrapeTruck(initialScrapeURL);
+			/**
+			 * Get truck properties: id, title, price, power, mileage, registrationDate, productionDate
+			 * Implements scrapeTruckItem()
+			 */
+			const truckItems = await OTOMOTOScraper.scrapeTruck(item.url);
 			console.log("Truck Items", truckItems);
+
+			/**
+			 * Scraping from every url from the list that was
+			 * retrieved from the initial scraping url
+			 */
+			console.log("\nScraping Complete", item.page, "\nURL", item.url);
 		});
-		// const adCount = await OTOMOTOScraper.getTotalAdsCount(initialScrapeURL);
-		// console.log("Total AdCount", adCount);
-
-		// const items = await OTOMOTOScraper.addItems(initialScrapeURL);
-		// console.log("Items", items);
-
-		// const truckItems = await OTOMOTOScraper.scrapeTruck(initialScrapeURL);
-		// console.log("Truck Items", truckItems);
-
-		// const nextPageUrl = await OTOMOTOScraper.getNextPageUrl(initialScrapeURL);
-		// console.log("Next Page URL", nextPageUrl);
 	} catch (err) {
 		/**
 		 * Implement RETRY MECHANISM here later

@@ -1,10 +1,13 @@
-import { initialScrapeURL, OTOMOTOParams } from "./config/scrapeParams";
-import { scrape } from "./main";
-import { getAllPageUrls } from "./modules/_getAllPageUrls";
+import { scrape } from "./main/scrape";
+import { scrapeAll } from "./main/scrapeAll";
 
-scrape();
+const app = {
+	scrape: () => scrape(),
+	scrapeAll: () => scrapeAll(),
+};
 
-// (async () => {
-// 	const pageList = await getAllPageUrls(initialScrapeURL, OTOMOTOParams);
-// 	console.log("pageList", pageList);
-// })();
+/** Scrape everything once from initial URL */
+app.scrape();
+
+/** Scrape from all pages & ads */
+// app.scrapeAll();
