@@ -4,22 +4,34 @@ import { logger } from "../utils/logger";
 import { _getAds } from "./_getAds";
 
 /**
- * Function that fetches the url and
- * the item id from the ad list
+ * Function that fetches the url and the item id
+ * from the ad list
  */
 
-export async function addItems(params: IScrapeParams) {
+export async function addItems(scrapeUrl: string, params: IScrapeParams) {
 	try {
-		// Get Ads after scraping
-		const { htmlParams } = params;
-		const { adIdAttr, adUrlAttr } = htmlParams;
-		const { ads }: any = await _getAds(params);
+		/** Get Ads after scraping */
+		const { adIdAttr, adHrefAttr } = params;
+		const { adsFound, ads }: any = await _getAds(scrapeUrl, params);
 
-		// Retrieve urls & ids
+		/** 
+		 * Case 1
+		 * No ads found
+		 * Return empty array
+		 */
+		if (!adsFound) {
+			return [];
+		}
+
+		/**
+		 * Case 2
+		 * Ads exist, retrieve urls & ids
+		 * Return list of ads
+		 */
 		const items = ads.map((item: any) => {
 			let id = item.children[0].attribs[adIdAttr].trim();
 			let url =
-				item.children[0].children[0].children[1].children[0].children[0].attribs[adUrlAttr].trim();
+				item.children[0].children[0].children[1].children[0].children[0].attribs[adHrefAttr].trim();
 
 			const _item: IItem = {
 				id,

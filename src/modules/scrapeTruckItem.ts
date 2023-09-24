@@ -5,49 +5,63 @@ import { logger } from "../utils/logger";
 import { _getAds } from "./_getAds";
 
 /**
- * Function that
- * - Scrapes truck data
- * - Parses and sanitizes it
+ * Function that Scrapes truck data, parses and sanitizes it
  */
 
-export async function scrapeTruckItem(params: IScrapeParams) {
+export async function scrapeTruckItem(scrapeUrl: string, params: IScrapeParams) {
 	try {
-		// Get Ads after scraping
-		const { htmlParams } = params;
+		/** Get ads from provided URL */
 		const {
 			adIdAttr,
 			adPriceAttr,
+			dataTestIdAttr,
 			itemFilterAttr,
 			adParameterAttr,
 			adRegDateAttr,
 			adPowerAttr,
 			adMileageAttr,
-		} = htmlParams;
-		const { ads, pageHTML }: any = await _getAds(params);
+		} = params;
+		const { ads, pageHTML, adsFound }: any = await _getAds(scrapeUrl, params);
 
-		// Get production year info
+		/**
+		 * Case 1
+		 * No Ads Found
+		 * Return Empty Array
+		 */
+		if (!adsFound) {
+			return [];
+		}
+
+		/**
+		 * Case 2
+		 * Ads Found
+		 * Parse truck information & return the list
+		 */
+
+		/** Get production year */
 		const $ = load(pageHTML);
-		const filterDiv: any = $(itemFilterAttr);
+		const filterSelector = `[${dataTestIdAttr}="${itemFilterAttr}"]`;
+		const filterDiv: any = $(filterSelector);
 		const productionDate = filterDiv[0].children[4].children[0].children[0].data
 			.split(" ")[1]
 			.trim();
 
-		// Retrieve truck properties
-		const items = ads.map((item: any, _id: any) => {
-			let itemSection = item.children[0].children[0];
+		/** Get truck list */
+		const trucks = ads.map((truckElem: any) => {
+			let truckSection = truckElem.children[0].children[0];
 
-			// Parse id, title, price
-			let id = item.children[0].attribs[adIdAttr].trim();
-			let title = itemSection.children[1].children[0].children[0].children[0].data.trim();
-			let price = itemSection.children[3].children[1].children[1].attribs[adPriceAttr].trim();
+			/** Parse id, title, price */
+			let id = truckElem.children[0].attribs[adIdAttr].trim();
+			let title = truckSection.children[1].children[0].children[0].children[0].data.trim();
+			let price = truckSection.children[3].children[1].children[1].attribs[adPriceAttr].trim();
 
-			// Parse power, mileage, registration date
-			let propertyDiv = itemSection.children[2].children[1].children;
+			/** Parse power, mileage, registration date */
+			let truckPropertyDiv = truckSection.children[2].children[1].children;
 			let mileage = "",
 				power = "",
 				registrationDate = "";
 
-			propertyDiv.map((dd: any) => {
+			truckPropertyDiv.map((dd: any) => {
 				if (dd.attribs[adParameterAttr] === adRegDateAttr) {
 					registrationDate = dd.children[0].next.data.trim();
 				}
@@ -74,7 +88,7 @@ export async function scrapeTruckItem(params: IScrapeParams) {
 		});
 
 		logger.info(successMessages.scrapeTruckItemDone);
-		return items;
+		return trucks;
 	} catch (err: any) {
 		logger.error(`${errorMessages.scrapeTruckItemFailed} ${err}`);
 	}

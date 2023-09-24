@@ -1,9 +1,11 @@
-// Interface for Platform to Scrape
-export interface IHTMLParams {
+export interface IScrapeParams {
+	dataTestIdAttr: string;
 	itemListParentAttr: string;
 	itemFilterAttr: string;
+	currentPageClass: string;
+	nextPageAttr: string;
 	adIdAttr: string;
-	adUrlAttr: string;
+	adHrefAttr: string;
 	adPriceAttr: string;
 	adParameterAttr: string;
 	adPowerAttr: string;
@@ -11,12 +13,6 @@ export interface IHTMLParams {
 	adMileageAttr: string;
 }
 
-export interface IScrapeParams {
-	scrapeUrl: string;
-	htmlParams: IHTMLParams;
-}
-
-// Interfcae for Ad / Truck etc
 export interface IItem {
 	id: string;
 	url: string;

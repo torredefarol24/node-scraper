@@ -5,19 +5,30 @@ const successErrorMessages_1 = require("../config/successErrorMessages");
 const logger_1 = require("../utils/logger");
 const _getAds_1 = require("./_getAds");
 /**
- * Function that fetches the url and
- * the item id from the ad list
+ * Function that fetches the url and the item id
+ * from the ad list
  */
-async function addItems(params) {
+async function addItems(scrapeUrl, params) {
     try {
-        // Get Ads after scraping
-        const { htmlParams } = params;
-        const { adIdAttr, adUrlAttr } = htmlParams;
-        const { ads } = await (0, _getAds_1._getAds)(params);
-        // Retrieve urls & ids
+        /** Get Ads after scraping */
+        const { adIdAttr, adHrefAttr } = params;
+        const { adsFound, ads } = await (0, _getAds_1._getAds)(scrapeUrl, params);
+        /**
+         * Case 1
+         * No ads found
+         * Return empty array
+         */
+        if (!adsFound) {
+            return [];
+        }
+        /**
+         * Case 2
+         * Ads exist, retrieve urls & ids
+         * Return list of ads
+         */
         const items = ads.map((item) => {
             let id = item.children[0].attribs[adIdAttr].trim();
-            let url = item.children[0].children[0].children[1].children[0].children[0].attribs[adUrlAttr].trim();
+            let url = item.children[0].children[0].children[1].children[0].children[0].attribs[adHrefAttr].trim();
             const _item = {
                 id,
                 url,

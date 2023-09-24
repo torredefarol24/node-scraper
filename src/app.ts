@@ -1,3 +1,9 @@
-import { scrape } from "./main";
+import { initialScrapeURL, OTOMOTOParams } from "./config/scrapeParams";
+import { getAllPageUrls } from "./modules/_getAllPageUrls";
 
-scrape();
+// scrape();
+
+(async () => {
+	const pageList = await getAllPageUrls(initialScrapeURL, OTOMOTOParams);
+	console.log("pageList", pageList);
+})();

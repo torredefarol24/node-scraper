@@ -1,4 +1,5 @@
 import { addItems } from "../modules/addItems";
+import { getNextPageUrl } from "../modules/getNextPageUrl";
 import { getTotalAdsCount } from "../modules/getTotalAdsCount";
 import { scrapeTruckItem } from "../modules/scrapeTruckItem";
 import { IScrapeParams } from "./interface";
@@ -9,15 +10,19 @@ export class Scraper {
 		this._params = scrapeParams;
 	}
 
-	public async getTotalAdsCount() {
-		return await getTotalAdsCount(this._params);
+	public async getTotalAdsCount(url: string) {
+		return await getTotalAdsCount(url, this._params);
 	}
 
-	public async addItems() {
-		return await addItems(this._params);
+	public async addItems(url: string) {
+		return await addItems(url, this._params);
 	}
 
-	public async scrapeTruck(){
-		return await scrapeTruckItem(this._params);
+	public async scrapeTruck(url: string) {
+		return await scrapeTruckItem(url, this._params);
+	}
+
+	public async getNextPageUrl(url: string) {
+		return await getNextPageUrl(url, this._params);
 	}
 }
