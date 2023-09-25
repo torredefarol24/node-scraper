@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 import { errorMessages } from "../config/successErrorMessages";
 import { logger } from "./logger";
+import { isValidUrl } from "./validators";
 
 /**
  * Launch puppeteer instance and return
@@ -9,6 +10,12 @@ import { logger } from "./logger";
 
 export async function getHTML(url: string) {
 	try {
+
+		/** Validate url */
+		if (!isValidUrl(url)){
+			return null;
+		}
+
 		/** Launch an instance of the browser */
 		const browser = await puppeteer.launch({
 			headless: "new",

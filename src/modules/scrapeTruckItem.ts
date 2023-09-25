@@ -42,39 +42,48 @@ export async function scrapeTruckItem(scrapeUrl: string, params: IScrapeParams) 
 		const $ = load(pageHTML);
 		const filterSelector = `[${dataTestIdAttr}="${itemFilterAttr}"]`;
 		const filterDiv: any = $(filterSelector);
-		const productionDate = filterDiv[0].children[4].children[0].children[0].data
-			.split(" ")[1]
-			.trim();
+		let id = "",
+			title = "",
+			price = "",
+			mileage = "",
+			power = "",
+			productionDate = "",
+			registrationDate = "";
+
+		/** FOR PRODUCTION DATE, FILTER MUST HAVE CERTAIN CHILDREN */
+		if (filterDiv.length > 0) {
+			productionDate = filterDiv[0]?.children[4]?.children[0]?.children[0]?.data
+				?.split(" ")[1]
+				.trim();
+		}
 
 		/** Get truck list */
 		const trucks = ads.map((truckElem: any) => {
-			let truckSection = truckElem.children[0].children[0];
+			let truckSection = truckElem.children[0]?.children[0];
 
 			/** Parse id, title, price */
-			let id = truckElem.children[0].attribs[adIdAttr].trim();
-			let title = truckSection.children[1].children[0].children[0].children[0].data.trim();
-			let price = truckSection.children[3].children[1].children[1].attribs[adPriceAttr].trim();
+			id = truckElem.children[0]?.attribs[adIdAttr].trim();
+			title = truckSection.children[1]?.children[0]?.children[0]?.children[0].data.trim();
+			price = truckSection.children[3]?.children[1]?.children[1]?.attribs[adPriceAttr].trim();
 
 			/** Parse power, mileage, registration date */
-			let truckPropertyDiv = truckSection.children[2].children[1].children;
-			let mileage = "",
-				power = "",
-				registrationDate = "";
+			let truckPropertyDiv = truckSection.children[2]?.children[1]?.children;
 
 			truckPropertyDiv.map((dd: any) => {
 				if (dd.attribs[adParameterAttr] === adRegDateAttr) {
-					registrationDate = dd.children[0].next.data.trim();
+					registrationDate = dd.children[0]?.next.data.trim();
 				}
 
 				if (dd.attribs[adParameterAttr] === adMileageAttr) {
-					mileage = dd.children[0].next.data.trim();
+					mileage = dd.children[0]?.next.data.trim();
 				}
 
 				if (dd.attribs[adParameterAttr] === adPowerAttr) {
-					power = dd.children[0].next.data.trim();
+					power = dd.children[0]?.next.data.trim();
 				}
 			});
 
+			/** Prepare data to return */
 			const truck: ITruck = {
 				id,
 				title,

@@ -14,7 +14,7 @@ export async function addItems(scrapeUrl: string, params: IScrapeParams) {
 		const { adIdAttr, adHrefAttr } = params;
 		const { adsFound, ads }: any = await _getAds(scrapeUrl, params);
 
-		/** 
+		/**
 		 * Case 1
 		 * No ads found
 		 * Return empty array
@@ -28,11 +28,18 @@ export async function addItems(scrapeUrl: string, params: IScrapeParams) {
 		 * Ads exist, retrieve urls & ids
 		 * Return list of ads
 		 */
-		const items = ads.map((item: any) => {
-			let id = item.children[0].attribs[adIdAttr].trim();
-			let url =
-				item.children[0].children[0].children[1].children[0].children[0].attribs[adHrefAttr].trim();
 
+		let id = "",
+			url = "";
+
+		const items = ads.map((item: any) => {
+			id = item.children[0]?.attribs[adIdAttr].trim();
+			url =
+				item.children[0]?.children[0]?.children[1]?.children[0]?.children[0]?.attribs[
+					adHrefAttr
+				].trim();
+
+			/** Prepare data to return */
 			const _item: IItem = {
 				id,
 				url,

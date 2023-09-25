@@ -1,10 +1,16 @@
 # Scraping Demo
 
-## Installation
+## Installation Approach 1: Docker Container
 
 Steps to follow:
 
-\*\* Please ensure typescript is installed globally before continuing.
+---
+
+## Installation Approach 2: Install packages
+
+** package.json file is configured to <strong>build</strong> and <strong>run tests</strong> after installing packages**
+
+Steps to follow:
 
 1.  Install Packages
 
@@ -19,6 +25,10 @@ Steps to follow:
 ## Tests
 
 Steps to follow:
+
+1.  Run Tests
+
+        $ yarn test
 
 ---
 
@@ -78,8 +88,27 @@ Run
    - How about HTTP API calls to its backend?
 
 4. Others
+
    - Dockerize the application
-   - Write unit tests
-   - Follow branching conventions, pull requests
+   - Typescript (DONE)
+
+     - Use interfaces
+     - Write source in TS
+     - Compile build into JS
+
+   - Write unit tests (DONE)
+
+     - Test cases to cover as many scenarios as possible
+     - Tests should pass as a whole system functioning altogether, adding of a new feature should not break what was already working.
+
+   - Design Patterns (DONE)
+     - Modular Approach
+     - Singleton
+     - DRY
+     - KISS
+   - GIT best practices (DONE)
+     - Follow branching conventions,
+     - Pull requests
+     - Commit messages indicating commit type/purpose
 
 ---

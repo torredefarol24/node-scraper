@@ -1,17 +1,28 @@
 {
 	"name": "node-scraper",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "build/app.js",
 	"author": "Toufiq <burningraven06@outlook.com>",
 	"license": "MIT",
 	"scripts": {
 		"watch-ts": "tsc -w",
 		"watch-js": "nodemon build/app.js",
 		"start": "node build/app.js",
-		"build": "tsc"
+		"build": "tsc",
+		"postinstall": "tsc && ts-mocha src/tests/*.ts",
+		"test": "ts-mocha src/tests/*.ts"
 	},
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.12",
 		"puppeteer": "^21.3.1"
+	},
+	"devDependencies": {
+		"@types/chai": "^4.3.6",
+		"@types/mocha": "^10.0.1",
+		"@types/node": "^20.6.4",
+		"chai": "^4.3.8",
+		"mocha": "^10.2.0",
+		"ts-mocha": "^10.0.0",
+		"typescript": "^5.2.2"
 	}
 }

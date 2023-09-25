@@ -23,6 +23,17 @@ export interface IPage {
 	url: string;
 }
 
+export interface IAdCount {
+	totalAdCount: any;
+	pageHTML?: any;
+}
+
+export interface ISearchResults {
+	adsFound: boolean;
+	ads: any[];
+	pageHTML: string;
+}
+
 export interface ITruck {
 	id: string;
 	title: string;

@@ -25,7 +25,7 @@ export async function getNextPageUrl(scrapeUrl: string, params: IScrapeParams) {
 		 * Fetch the next page
 		 */
 		if (currentPageItem.length > 0) {
-			nextPageUrl = `${DOMAIN}${currentPageItem[0].next.children[0].attribs[adHrefAttr].trim()}`;
+			nextPageUrl = `${DOMAIN}${currentPageItem[0].next?.children[0]?.attribs[adHrefAttr].trim()}`;
 		}
 
 		logger.info(successMessages.getNextPageUrlDone);

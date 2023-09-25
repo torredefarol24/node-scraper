@@ -1,5 +1,5 @@
 import { load } from "cheerio";
-import { IScrapeParams } from "../bootstrap/interface";
+import { IScrapeParams, ISearchResults } from "../bootstrap/interface";
 import { errorMessages } from "../config/successErrorMessages";
 import { getHTML } from "../utils/htmlFetcher";
 import { logger } from "../utils/logger";
@@ -19,34 +19,41 @@ export async function _getAds(scrapeUrl: string, params: IScrapeParams) {
 		/** Locate Selector */
 		const allAdsSelector = `[${dataTestIdAttr}="${itemListParentAttr}"]`;
 		const adListDiv: any = $(allAdsSelector);
-		const allAds = adListDiv[0].children;
+		let results: ISearchResults = {
+			adsFound: false,
+			ads: [],
+			pageHTML: "",
+		};
 
-		/** 
-		 * Case 1
-		 * No ads found, return empty array
-		*/
-		if (allAds.length === 0) {
-			return {
-				adsFound: false,
-				ads: [],
-				pageHTML: "",
-			};
+		/** Check if selector returns required html element */
+		if (adListDiv.length === 0) {
+			return results;
 		}
 
-		/** 
+		const allAds = adListDiv[0].children;
+
+		/**
+		 * Case 1
+		 * No ads found, return empty array
+		 */
+		if (allAds.length === 0) {
+			return results;
+		}
+
+		/**
 		 * Case 2
-		 * Ads found, sanitize data by removing divs that don't contain ads 
+		 * Ads found, sanitize data by removing divs that don't contain ads
 		 * Return cleaned data list
-		*/
+		 */
 		const validAds = allAds.filter((item: any) => {
 			return !item.attribs.role;
 		});
 
-		return {
-			adsFound: validAds.length > 0,
-			ads: validAds,
-			pageHTML,
-		};
+		/** Prepare data to return */
+		results.adsFound = validAds.length > 0;
+		results.ads = validAds;
+		results.pageHTML = pageHTML;
+		return results;
 	} catch (err: any) {
 		logger.error(`${errorMessages.getTotalAdsCountFailed} ${err}`);
 	}

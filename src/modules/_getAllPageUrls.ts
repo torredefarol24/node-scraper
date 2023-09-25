@@ -57,7 +57,7 @@ export async function getAllPageUrls(scrapeUrl: string, params: IScrapeParams) {
 		if (adsInMultiplePage) {
 			const nextPageSelector = `[${dataTestIdAttr}="${nextPageAttr}"]`;
 			const nextPageArrow: any = $(nextPageSelector);
-			pageCount = nextPageArrow[0].prev.children[0].children[0].children[0].data;
+			pageCount = nextPageArrow[0]?.prev?.children[0]?.children[0]?.children[0]?.data;
 		}
 
 		/**
@@ -85,7 +85,10 @@ export async function getAllPageUrls(scrapeUrl: string, params: IScrapeParams) {
 				nextURL = `${currentURL.split(`&page=${i + 1}`)[0]}&page=${i + 2}`;
 			}
 
-			/** Store all page urls to scrape later */
+			/**
+			 * Store all page urls to scrape later
+			 * Prepare data to return
+			 */
 			let pageURL: IPage = {
 				page: i + 1,
 				url: currentURL,

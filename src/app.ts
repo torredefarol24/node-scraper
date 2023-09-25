@@ -10,4 +10,4 @@ const app = {
 app.scrape();
 
 /** Scrape from all pages & ads */
-// app.scrapeAll();
+app.scrapeAll();
