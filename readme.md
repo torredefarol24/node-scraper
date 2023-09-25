@@ -1,14 +1,10 @@
 # Scraping Demo
 
-## Installation Approach 1: Docker Container
-
-Steps to follow:
-
 ---
 
-## Installation Approach 2: Install packages
+## Installation
 
-** package.json file is configured to <strong>build</strong> and <strong>run tests</strong> after installing packages**
+** package.json file is configured to <strong>build</strong> and <strong>run tests</strong> automatically after installing packages**
 
 Steps to follow:
 
@@ -89,7 +85,7 @@ Run
 
 4. Others
 
-   - Dockerize the application
+   - Dockerize the application [TO DO]
    - Typescript (DONE)
 
      - Use interfaces
